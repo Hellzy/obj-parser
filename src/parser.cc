@@ -31,7 +31,7 @@ void OBJParser::load(std::string filename)
             {
                 size_t idx;
                 ifs >> idx;
-                mesh.vertices.push_back(vertices[idx]);
+                mesh.vertices.push_back(vertices[idx - 1]); // index starts at 1
             }
 
             meshes.push_back(mesh);
