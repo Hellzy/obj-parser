@@ -59,7 +59,7 @@ using vertex_t = Vertex;
 
 struct Mesh
 {
-    std::vector<size_t> vertex_indices;
+    std::vector<vertex_t> vertices;
     //material indices
     //...
 };
