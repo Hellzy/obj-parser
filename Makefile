@@ -4,7 +4,7 @@ ifdef DEBUG
 	CXXFLAGS+=-g
 endif
 
-OBJS=$(addprefix src/, parser.o)
+OBJS=$(addprefix src/, parser.o types.o)
 BIN=main
 LIB=libobjparser.so
 
