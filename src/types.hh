@@ -3,9 +3,47 @@
 
 struct Point
 {
-    double x;
-    double y;
-    double z;
+    double x, y, z;
+
+    /*
+     * Simple addition between two Points
+     */
+
+    Point operator+(const Point& p);
+
+    Point& operator+=(const Point& p);
+
+    Point operator-(const Point& p);
+
+    Point& operator-=(const Point& p);
+
+    /*
+     * Simple multiplication between two Points
+     */
+
+    Point operator*(const Point& p);
+
+    Point& operator*=(const Point& p);
+
+    /*
+     * Simple multiplication between a Point and a scalar
+     */
+
+    template <typename T>
+    Point operator*(T scalar)
+    {
+        return Point{x * scalar, y * scalar, z * scalar};
+    }
+
+    template <typename T>
+    Point& operator*=(T scalar)
+    {
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
+
+        return *this;
+    }
 };
 
 using point_t = Point;
