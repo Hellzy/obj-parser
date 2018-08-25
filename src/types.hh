@@ -57,9 +57,14 @@ struct Vertex
 
 using vertex_t = Vertex;
 
+/**
+ * A mesh here is a triangle
+ */
 struct Mesh
 {
-    std::vector<vertex_t> vertices;
+    vertex_t v1;
+    vertex_t v2;
+    vertex_t v3;
     //material indices
     //...
 };
