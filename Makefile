@@ -1,4 +1,4 @@
-CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -pedantic
+CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -pedantic -fPIC
 
 ifdef DEBUG
 	CXXFLAGS+=-g
