@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include <string>
 
 #include "types.hh"
@@ -11,10 +12,16 @@ public:
 
     void load(std::string filename);
 
-    std::vector<mesh_t> meshes_get() { return meshes; }
-    std::vector<vertex_t> vertices_get() { return vertices; }
+    std::vector<mesh_t> meshes_get() { return meshes_; }
+    std::vector<vertex_t> vertices_get() { return vertices_; }
 
 private:
-    std::vector<mesh_t> meshes;
-    std::vector<vertex_t> vertices;
+    void process_vertex(std::ifstream& ifs);
+    void process_vertex_texture(std::ifstream& ifs);
+    void process_face(std::ifstream& ifs);
+
+private:
+    std::vector<mesh_t> meshes_;
+    std::vector<vertex_t> vertices_;
+    std::vector<point_t> vt_;
 };
