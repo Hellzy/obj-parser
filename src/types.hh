@@ -50,7 +50,8 @@ using point_t = Point;
 
 struct Vertex
 {
-    point_t pos;
+    point_t pos = {0, 0, 0};
+    point_t tex = {0, 0, 0};
     //normal
     //texture
 };

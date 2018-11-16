@@ -50,13 +50,40 @@ void OBJParser::process_face(std::ifstream& ifs)
 {
     mesh_t mesh;
 
-    for (int i = 0; i < 3; ++i)
+    for (size_t i = 0; i < 3; ++i)
     {
-        size_t idx;
-        ifs >> idx;
-        ((vertex_t*)&mesh)[i] = vertices_[idx - 1]; // index starts at 1
-        /* Ugly trick to embed the mesh creation in the loop */
+        auto [v_idx, vt_idx, vn_idx] = get_vertex_info(ifs);
+
+        if (vt_idx > 0) //idx == 0 means no '/' was found
+            vertices_[v_idx - 1].tex = vt_[vt_idx - 1];  // index starts at 1
+
+        ((vertex_t*)&mesh)[i] = vertices_[v_idx - 1];   // index starts at 1
     }
 
     meshes_.push_back(mesh);
+}
+
+inline
+std::tuple<size_t, size_t, size_t> OBJParser::get_vertex_info(std::ifstream& ifs)
+{
+    std::string seq;
+    std::string num;
+    size_t offs[3] = {0};
+    size_t offs_off = 0;
+    size_t lastpos = 0;
+
+    ifs >> seq;
+
+    for (size_t i = 0; i < seq.size(); ++i)
+    {
+        if (seq[i] == '/')
+        {
+            offs[offs_off++] = std::stoi(seq.substr(lastpos, i - lastpos));
+            lastpos = i + 1;
+        }
+    }
+
+    offs[offs_off] = std::stoi(seq.substr(lastpos, seq.size() - lastpos));
+
+    return {offs[0], offs[1], offs[2]};
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <fstream>
 #include <string>
+#include <tuple>
 
 #include "types.hh"
 
@@ -19,6 +20,7 @@ private:
     void process_vertex(std::ifstream& ifs);
     void process_vertex_texture(std::ifstream& ifs);
     void process_face(std::ifstream& ifs);
+    std::tuple<size_t, size_t, size_t> get_vertex_info(std::ifstream& str);
 
 private:
     std::vector<mesh_t> meshes_;
