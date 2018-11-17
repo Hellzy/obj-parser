@@ -18,9 +18,11 @@ void OBJParser::load(std::string filename)
         ifs >> tok;
 
         if (!tok.compare("v"))
-            process_vertex(ifs);
+            process_tricoords(ifs, vertices_);
         else if (!tok.compare("vt"))
             process_vertex_texture(ifs);
+        else if (!tok.compare("vn"))
+            process_tricoords(ifs, n_);
         else if (!tok.compare("f"))
             process_face(ifs);
         else
@@ -29,20 +31,15 @@ void OBJParser::load(std::string filename)
 }
 
 inline
-void OBJParser::process_vertex(std::ifstream& ifs)
-{
-    double x, y, z;
-
-    ifs >> x >> y >> z;
-    vertices_.push_back({x, y, z});
-}
-
-inline
 void OBJParser::process_vertex_texture(std::ifstream& ifs)
 {
     double x, y;
     ifs >> x >> y;
     vt_.push_back(point_t{x, y, 0});
+
+    /* This loop eats the optional 3rd argument which is always 0 if set */
+    while (ifs.peek() != '\n')
+        ifs.get();
 }
 
 inline
@@ -78,12 +75,16 @@ std::tuple<size_t, size_t, size_t> OBJParser::get_vertex_info(std::ifstream& ifs
     {
         if (seq[i] == '/')
         {
-            offs[offs_off++] = std::stoi(seq.substr(lastpos, i - lastpos));
+            if (seq[i - 1] != '/') //discard double slash
+                offs[offs_off] = std::stoi(seq.substr(lastpos, i - lastpos));
+
             lastpos = i + 1;
+            ++offs_off;
         }
     }
 
-    offs[offs_off] = std::stoi(seq.substr(lastpos, seq.size() - lastpos));
+    if (seq[seq.size() - 1] != '/') //discard double slash
+        offs[offs_off] = std::stoi(seq.substr(lastpos, seq.size() - lastpos));
 
     return {offs[0], offs[1], offs[2]};
 }

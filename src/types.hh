@@ -52,8 +52,8 @@ struct Vertex
 {
     point_t pos = {0, 0, 0};
     point_t tex = {0, 0, 0};
+    point_t norm = {0, 0, 0};
     //normal
-    //texture
 };
 
 using vertex_t = Vertex;
@@ -66,8 +66,6 @@ struct Mesh
     vertex_t v1;
     vertex_t v2;
     vertex_t v3;
-    //material indices
-    //...
 };
 
 using mesh_t = Mesh;
