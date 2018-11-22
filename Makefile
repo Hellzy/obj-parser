@@ -8,7 +8,7 @@ OBJS=$(addprefix src/, parser.o types.o)
 BIN=main
 LIB=libobjparser.so
 
-lib: $(OBJS)
+$(LIB): $(OBJS)
 	$(LINK.cc) -shared -o $(LIB) $^ $(LDLIBS)
 
 $(BIN): $(OBJS) src/$(BIN).o
@@ -17,4 +17,4 @@ $(BIN): $(OBJS) src/$(BIN).o
 clean:
 	$(RM) $(BIN) $(OBJS) src/$(BIN).o $(LIB)
 
-.PHONY: clean lib
+.PHONY: clean
