@@ -5,16 +5,21 @@ ifdef DEBUG
 endif
 
 OBJS=$(addprefix src/, parser.o types.o)
+LDLIBS=-Lmtl-parser -lmtlparser
 BIN=main
 LIB=libobjparser.so
 
-$(LIB): $(OBJS)
-	$(LINK.cc) -shared -o $(LIB) $^ $(LDLIBS)
+$(LIB): $(OBJS) deps
+	$(LINK.cc) -shared -o $@ $< $(LDLIBS)
 
 $(BIN): $(OBJS) src/$(BIN).o
 	$(LINK.cc) -o $@ $^ $(LDLIBS)
 
+deps:
+	make -C mtl-parser
+
 clean:
 	$(RM) $(BIN) $(OBJS) src/$(BIN).o $(LIB)
+	make clean -C mtl-parser
 
-.PHONY: clean
+.PHONY: clean deps
