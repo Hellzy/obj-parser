@@ -1,0 +1,3 @@
+[submodule "mtl-parser"]
+	path = mtl-parser
+	url = git@github.com:Hellzy/mtl-parser.git
