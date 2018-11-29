@@ -20,6 +20,8 @@ deps:
 
 clean:
 	$(RM) $(BIN) $(OBJS) src/$(BIN).o $(LIB)
+
+clean-all: clean
 	make clean -C mtl-parser
 
-.PHONY: clean deps
+.PHONY: clean clean-all deps
