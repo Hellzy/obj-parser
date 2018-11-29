@@ -25,6 +25,8 @@ void OBJParser::load(std::string filename)
             process_tricoords(ifs, n_);
         else if (!tok.compare("f"))
             process_face(ifs);
+        else if (!tok.compare("mtllib"))
+            process_mtl(ifs);
         else
             std::cerr << "Rejected: " << tok << '\n';
     }
@@ -87,4 +89,14 @@ std::tuple<size_t, size_t, size_t> OBJParser::get_vertex_info(std::ifstream& ifs
         offs[offs_off] = std::stoi(seq.substr(lastpos, seq.size() - lastpos));
 
     return {offs[0], offs[1], offs[2]};
+}
+
+
+void OBJParser::process_mtl(std::ifstream& ifs)
+{
+    std::string filename;
+
+    ifs  >> filename;
+    mtlp::MTLParser mtl_p(filename);
+    mats_ = mtl_p.mats_get();
 }

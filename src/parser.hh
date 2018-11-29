@@ -4,6 +4,7 @@
 #include <tuple>
 
 #include "types.hh"
+#include "mtl_parser.hh"
 
 class OBJParser
 {
@@ -20,6 +21,7 @@ private:
     void process_vertex_texture(std::ifstream& ifs);
     void process_face(std::ifstream& ifs);
     std::tuple<size_t, size_t, size_t> get_vertex_info(std::ifstream& str);
+    void process_mtl(std::ifstream& ifs);
 
     template <typename T>
     void process_tricoords(std::ifstream& ifs, std::vector<T>& v);
@@ -29,6 +31,7 @@ private:
     std::vector<vertex_t> vertices_;
     std::vector<point_t> vt_;
     std::vector<point_t> n_;
+    std::map<std::string, dev_mat_t> mats_;
 };
 
 #include "parser.hxx"

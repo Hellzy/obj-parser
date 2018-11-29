@@ -1,4 +1,5 @@
 CXXFLAGS=-std=c++17 -Wall -Wextra -Werror -pedantic -fPIC
+CPPFLAGS=-Imtl-parser/src -I/opt/cuda/include
 
 ifdef DEBUG
 	CXXFLAGS+=-g
