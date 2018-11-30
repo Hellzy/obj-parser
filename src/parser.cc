@@ -27,8 +27,12 @@ void OBJParser::load(std::string filename)
             process_face(ifs);
         else if (!tok.compare("mtllib"))
             process_mtl(ifs);
+        else if (!tok.compare("usemtl"))
+            set_cur_mat(ifs);
+#if 0
         else
             std::cerr << "Rejected: " << tok << '\n';
+#endif
     }
 }
 
@@ -59,6 +63,7 @@ void OBJParser::process_face(std::ifstream& ifs)
         ((vertex_t*)&mesh)[i] = vertices_[v_idx - 1];   // index starts at 1
     }
 
+    mesh.mat_idx = cur_mat_idx;
     meshes_.push_back(mesh);
 }
 
@@ -99,4 +104,27 @@ void OBJParser::process_mtl(std::ifstream& ifs)
     ifs  >> filename;
     mtlp::MTLParser mtl_p(filename);
     mats_ = mtl_p.mats_get();
+    mats_vec_ = std::vector<dev_mat_t>(mats_.size());
+}
+
+void OBJParser::set_cur_mat(std::ifstream& ifs)
+{
+    std::string texname;
+    ifs >> texname;
+
+    //get mat idx in mats_
+    size_t pos = 0;
+
+    for (const auto& it : mats_)
+    {
+        if (!it.first.compare(texname))
+            break;
+        ++pos;
+    }
+
+    if (pos >= mats_.size())
+        throw 0;
+
+    mats_vec_[pos] = mats_[texname];
+    cur_mat_idx = pos;
 }

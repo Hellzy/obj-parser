@@ -66,6 +66,7 @@ struct Mesh
     vertex_t v1;
     vertex_t v2;
     vertex_t v3;
+    size_t mat_idx;
 };
 
 using mesh_t = Mesh;
