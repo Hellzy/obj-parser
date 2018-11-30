@@ -125,6 +125,6 @@ void OBJParser::set_cur_mat(std::ifstream& ifs)
     if (pos >= mats_.size())
         throw 0;
 
-    mats_vec_[pos] = mats_[texname];
+    mats_vec_[pos] = DeviceMaterial(mats_[texname]);
     cur_mat_idx = pos;
 }
