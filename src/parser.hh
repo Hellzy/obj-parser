@@ -16,6 +16,7 @@ public:
 
     std::vector<mesh_t> meshes_get() { return meshes_; }
     std::vector<vertex_t> vertices_get() { return vertices_; }
+    std::map<std::string, dev_mat_t> mats_get() { return mats_; }
 
 private:
     void process_vertex_texture(std::ifstream& ifs);
